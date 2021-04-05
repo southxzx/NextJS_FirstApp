@@ -11,6 +11,9 @@ export default function Home({ allPostsData }) {
       <Head>
         <title>{siteTitle}</title>
       </Head>
+      <Link href="/joke">
+        <a>A random joke today?</a>
+      </Link>
       <section className={utilStyles.headingMd}>
         <p>Tên là nam</p>
         <p>
@@ -22,15 +25,13 @@ export default function Home({ allPostsData }) {
       <section className={`${utilStyles.headingMd} ${utilStyles.padding1px}`}>
         <h2 className={utilStyles.headingLg}>Blog</h2>
         <ul className={utilStyles.list}>
-          {allPostsData.map(({ id, date, title }) => (
-            <li className={utilStyles.listItem} key={id}>
-              <Link href={`/posts/${id}`}>
-                <a>{title}</a>
+          {allPostsData.map((post) => (
+            <li className={utilStyles.listItem} key={post.id}>
+              <Link href={`/posts/${post.id}`}>
+                <a>{post.title}</a>
               </Link>
-              <br />
-              <small className={utilStyles.lightText}>
-                <Date dateString={date} />
-              </small>
+              <br/>
+              <p>{post.body}</p>
             </li>
           ))}
         </ul>
@@ -40,7 +41,7 @@ export default function Home({ allPostsData }) {
 }
 
 export async function getStaticProps() {
-  const allPostsData = getSortedPostsData();
+  const allPostsData = await getSortedPostsData();
   return {
     props: {
       allPostsData

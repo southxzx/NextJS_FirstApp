@@ -12,10 +12,10 @@ export default function Post({ postData }) {
       </Head>
       <article>
         <h1 className={utilStyles.headingXl}>{postData.title}</h1>
-        <div className={utilStyles.lightText}>
-          <Date dateString={postData.date} />
-        </div>
-        <div dangerouslySetInnerHTML={{ __html: postData.contentHtml }} />
+        {/* <div className={utilStyles.lightText}>
+          <Date dateString={postData.body} />
+        </div> */}
+        <div dangerouslySetInnerHTML={{ __html: postData.body }} />
       </article>
     </Layout>
   )
@@ -23,7 +23,8 @@ export default function Post({ postData }) {
 
 export async function getStaticPaths(){
   // Return a list of possible value for id
-  const paths = getAllPostIds()
+  const paths = await getAllPostIds()
+  // console.log(paths);
   return {
     paths,
     fallback: false
